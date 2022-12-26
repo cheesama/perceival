@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "perceival"
+version = "0.1.0"
+description = "multi task enabled AGI framework besed on perceiver"
+authors = ["cheesama"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+transformers = "^4.25.1"
+pytorch-lightning = "^1.8.5.post0"
+torch = "^1.13.1"
+torchvision = "^0.14.1"
+dill = "^0.3.6"
+lightning = "^1.8.6"
+ffmpeg-python = "^0.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,7 +1,7 @@
-from transformers import PerceiverTokenizer, PerceiverForSequenceClassification
+from transformers import PerceiverTokenizer, PerceiverForMaskedLM
 
-tokenizer = PerceiverTokenizer.from_pretrained("deepmind/language-perceiver") #uses raw bytes utf-8 encoding, can be applied to korean, Too!
-model = PerceiverForSequenceClassification.from_pretrained("deepmind/language-perceiver")
+tokenizer = PerceiverTokenizer.from_pretrained("deepmind/language-perceiver")
+model = PerceiverForMaskedLM.from_pretrained("deepmind/language-perceiver")
 
 text = "hello world"
 inputs = tokenizer(text, return_tensors="pt").input_ids

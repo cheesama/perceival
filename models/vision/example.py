@@ -1,12 +1,19 @@
-from transformers import PerceiverFeatureExtractor, PerceiverForImageClassificationLearned
+from transformers import (
+    PerceiverFeatureExtractor,
+    PerceiverForImageClassificationLearned,
+)
 from PIL import Image
 import requests
 
 url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 image = Image.open(requests.get(url, stream=True).raw)
 
-feature_extractor = PerceiverFeatureExtractor.from_pretrained("deepmind/vision-perceiver-learned")
-model = PerceiverForImageClassificationLearned.from_pretrained("deepmind/vision-perceiver-learned")
+feature_extractor = PerceiverFeatureExtractor.from_pretrained(
+    "deepmind/vision-perceiver-learned"
+)
+model = PerceiverForImageClassificationLearned.from_pretrained(
+    "deepmind/vision-perceiver-learned"
+)
 
 inputs = feature_extractor(images=image, return_tensors="pt").pixel_values
 outputs = model(inputs=inputs)

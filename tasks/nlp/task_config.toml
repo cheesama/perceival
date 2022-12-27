@@ -4,13 +4,12 @@
 
 [[tasks]]
 name = "klue"
-sub_tasks = ["ynat", "sts", "nli", "ner", "mrc", "wos"]
+sub_tasks = ["ynat", "sts", "nli", "ner", "mrc"]
 task_types = [
     "SequenceClassification",
     "SequenceClassification",
     "SequenceClassification",
     "TokenClassification",
-    "QuestionAnswering",
     "TokenClassification",
 ]
 label_keys = ["label","labels__binary-label", "label", "ner_tags"]

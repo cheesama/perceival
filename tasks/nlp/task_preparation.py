@@ -15,6 +15,7 @@ nlp_task_types = [
     "QuestionAnswering",
     "SequenceClassification",
     "TokenClassification",
+    "Regression"
 ]
 
 task_config_file = f"{os.path.dirname(os.path.abspath(__file__))}/task_config.toml"
@@ -25,6 +26,7 @@ with open(task_config_file, "r") as f:
 
 for task in task_config["tasks"]:
     # check config validation
+    logging.info(f"preparing {task['name']} ...")
     assert "task_types" in task
     assert len(task["task_types"]) > 0
     if "sub_tasks" in task:
@@ -48,4 +50,3 @@ for task in task_config["tasks"]:
 
     dataset_list.append(dataset)
 
-    # generate each task encoder / decoder

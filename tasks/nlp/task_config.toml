@@ -1,15 +1,14 @@
 # nlp task_types colud be(follwing huggingface transformers implementation)
 # CausalLM, Seq2SeqLM, MaskedLM, NextSentencePrediction, QuestionAnswering,
-# SequenceClassification, TokenClassification
+# SequenceClassification, TokenClassification, Regression
 
 [[tasks]]
 name = "klue"
-sub_tasks = ["ynat", "sts", "nli", "ner", "mrc"]
+sub_tasks = ["ynat", "sts", "nli", "ner"]
 task_types = [
     "SequenceClassification",
     "SequenceClassification",
     "SequenceClassification",
-    "TokenClassification",
     "TokenClassification",
 ]
 label_keys = ["label","labels__binary-label", "label", "ner_tags"]
@@ -17,18 +16,13 @@ label_keys = ["label","labels__binary-label", "label", "ner_tags"]
 [[tasks]]
 name = "kor_sarcasm"
 task_types = ["SequenceClassification"]
-label_keys = []
-
-[[tasks]]
-name = "kor_sarcasm"
-task_types = ["SequenceClassification"]
-label_keys = []
+label_keys = ["label"]
 
 [[tasks]]
 name = "kor_nlu"
 sub_tasks = ["nli", "sts"]
-task_types = ["SequenceClassification", "SequenceClassification"]
-label_keys = []
+task_types = ["SequenceClassification", "Regression"]
+label_keys = ["label","score"]
 
 [[tasks]]
 name = "skt/kobest_v1"
@@ -40,17 +34,12 @@ task_types = [
     "SequenceClassification",
     "SequenceClassification",
 ]
-label_keys = []
-
-[[tasks]]
-name = "kor_sarcasm"
-task_types = ["SequenceClassification"]
-label_keys = []
+label_keys = ["label","label","label","label","label"]
 
 [[tasks]]
 name = "kor_sae"
 task_types = ["SequenceClassification"]
-label_keys = []
+label_keys = ["label"]
 
 [[tasks]]
 name = "squad_kor_v1"
@@ -59,9 +48,9 @@ task_types = ["QuestionAnswering"]
 [[tasks]]
 name = "mteb/amazon_massive_intent"
 task_types = ["SequnceClassification"]
-label_keys = []
+label_keys = ["label"]
 [[tasks]]
 name = "paws"
 sub_tasks = ["labeled_final"]
 task_types = ["SequenceClassification"]
-label_keys = []
+label_keys = ["label"]

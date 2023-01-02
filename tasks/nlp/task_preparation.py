@@ -15,7 +15,7 @@ nlp_task_types = [
     "QuestionAnswering",
     "SequenceClassification",
     "TokenClassification",
-    "Regression"
+    "Regression",
 ]
 
 task_config_file = f"{os.path.dirname(os.path.abspath(__file__))}/task_config.toml"
@@ -37,6 +37,7 @@ for task in task_config["tasks"]:
     ):
         assert "label_keys" in task
         assert len(task["label_keys"]) == len(task["task_types"])
+        assert len(task["feature_keys"]) == len(task["task_types"])
 
     # dataset download part
     if "sub_tasks" in task:
@@ -49,4 +50,3 @@ for task in task_config["tasks"]:
         dataset = load_dataset(task["name"])
 
     dataset_list.append(dataset)
-

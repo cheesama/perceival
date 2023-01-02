@@ -10,7 +10,7 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
         task_configs: [dict],
         decoder_dim: int,
         config: str = "deepmind/language-perceiver",
-        baseModelPath: str = None
+        baseModelPath: str = None,
         lr: float = 1e-3,
         batch_size: int = 16
     ):
@@ -27,6 +27,8 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
         self.batch_size = batch_size
 
         # add multiple classifier layers
+        for task_config in self.task_configs:
+            pass
 
     def forward(self, text):
         # prepare input
@@ -41,6 +43,7 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
 
     def configure_optimizers(self):
         # return multiple optimizers
+        pass
 
     def train_dataloader(self):
         pass

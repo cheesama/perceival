@@ -11,17 +11,20 @@ task_types = [
     "SequenceClassification",
     "TokenClassification",
 ]
+feature_keys = [["title"],["sentence1","sentence2"],["premise","hypothesis"],["sentence"]]
 label_keys = ["label","labels__binary-label", "label", "ner_tags"]
 
 [[tasks]]
 name = "kor_sarcasm"
 task_types = ["SequenceClassification"]
+feature_keys = [["tokens"]]
 label_keys = ["label"]
 
 [[tasks]]
 name = "kor_nlu"
 sub_tasks = ["nli", "sts"]
 task_types = ["SequenceClassification", "Regression"]
+feature_keys = [["premise","hypothesis"],["sentence1","sentence2"]]
 label_keys = ["label","score"]
 
 [[tasks]]
@@ -34,11 +37,13 @@ task_types = [
     "SequenceClassification",
     "SequenceClassification",
 ]
+feature_keys= [["paragraph","question"],["premise","question","alternative_1","alternative_2"],["sentence"],["context","ending_1","ending_2","ending_3","ending_4"],["word","context_1","context_2"]]
 label_keys = ["label","label","label","label","label"]
 
 [[tasks]]
 name = "kor_sae"
 task_types = ["SequenceClassification"]
+feature_keys = [["intent_pair1","intent_pair2"]]
 label_keys = ["label"]
 
 [[tasks]]
@@ -53,4 +58,5 @@ label_keys = ["label"]
 name = "paws"
 sub_tasks = ["labeled_final"]
 task_types = ["SequenceClassification"]
+feature_keys = [["sentence1","sentence2"]]
 label_keys = ["label"]

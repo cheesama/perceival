@@ -1,6 +1,9 @@
-# nlp task_types colud be(follwing huggingface transformers implementation)
+# nlp task_types: colud be(follwing huggingface transformers implementation)
 # CausalLM, Seq2SeqLM, MaskedLM, NextSentencePrediction, QuestionAnswering,
 # SequenceClassification, TokenClassification, Regression
+
+# sources: huggingface_datasets, korpora
+
 
 [[tasks]]
 name = "klue"
@@ -54,9 +57,31 @@ task_types = ["QuestionAnswering"]
 name = "mteb/amazon_massive_intent"
 task_types = ["SequnceClassification"]
 label_keys = ["label"]
+
 [[tasks]]
 name = "paws"
 sub_tasks = ["labeled_final"]
 task_types = ["SequenceClassification"]
 feature_keys = [["sentence1","sentence2"]]
 label_keys = ["label"]
+
+[[tasks]]
+source = "korpora"
+name = "nsmc"
+task_types = ["SequenceClassification"]
+feature_keys = [["text"]]
+label_keys = ["label"]
+
+[[tasks]]
+source = "korpora"
+name = "question_pair"
+task_types = ["SequenceClassification"]
+feature_keys = [["text","pair"]]
+label_keys = ["label"]
+
+[[tasks]]
+source = "korpora"
+name = "korean_petitions"
+task_types = ["SequenceClassification"]
+feature_keys = [["text","title"]]
+label_keys = ["category"]

@@ -7,15 +7,14 @@
 
 [[tasks]]
 name = "klue"
-sub_tasks = ["ynat", "sts", "nli", "ner"]
+sub_tasks = ["ynat", "nli", "ner"]
 task_types = [
-    "SequenceClassification",
     "SequenceClassification",
     "SequenceClassification",
     "TokenClassification",
 ]
-feature_keys = [["title"],["sentence1","sentence2"],["premise","hypothesis"],["sentence"]]
-label_keys = ["label","labels__binary-label", "label", "ner_tags"]
+feature_keys = [["title"],["premise","hypothesis"],["sentence"]]
+label_keys = ["label", "label", "ner_tags"]
 
 [[tasks]]
 name = "kor_sarcasm"
@@ -44,18 +43,10 @@ feature_keys= [["paragraph","question"],["premise","question","alternative_1","a
 label_keys = ["label","label","label","label","label"]
 
 [[tasks]]
-name = "kor_sae"
-task_types = ["SequenceClassification"]
-feature_keys = [["intent_pair1","intent_pair2"]]
-label_keys = ["label"]
-
-[[tasks]]
-name = "squad_kor_v1"
-task_types = ["QuestionAnswering"]
-
-[[tasks]]
 name = "mteb/amazon_massive_intent"
-task_types = ["SequnceClassification"]
+sub_tasks = ["ko"]
+task_types = ["SequenceClassification"]
+feature_keys = [["text"]]
 label_keys = ["label"]
 
 [[tasks]]

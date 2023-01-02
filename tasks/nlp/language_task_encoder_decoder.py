@@ -4,6 +4,7 @@ from pytorch_lightning.trainer.supporters import CombinedLoader
 import torch.nn as nn
 import pytorch_lightning as pl
 
+
 class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
     def __init__(
         self,
@@ -12,7 +13,7 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
         config: str = "deepmind/language-perceiver",
         baseModelPath: str = None,
         lr: float = 1e-3,
-        batch_size: int = 16
+        batch_size: int = 16,
     ):
         super().__init__()
         if baseModelPath is None:
@@ -33,7 +34,9 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
     def forward(self, text):
         # prepare input
         encoding = tokenizer(text, padding="max_length", return_tensors="pt")
-        base_features = self.base_model(inputs=encoding.input_ids, attention_mask=encoding.attention_mask)
+        base_features = self.base_model(
+            inputs=encoding.input_ids, attention_mask=encoding.attention_mask
+        )
 
     def predict(self, text):
         pass
@@ -56,6 +59,3 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
 
     def validation_step(self, val_batch, batch_idx):
         pass
-           
-
-

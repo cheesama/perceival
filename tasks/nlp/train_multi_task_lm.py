@@ -1,5 +1,6 @@
 from task_preparation import get_config_dataset
 from language_task_dataset import LanguageMultiTaskDataset
+from language_task_encoder_decoder import LanguageMultiTaskEncoderDecoder
 
 import logging
 
@@ -20,6 +21,7 @@ for entire_data in data_list:
         label_key=entire_data["label_key"],
     )
     train_datasets.append(dataset)
+    logging.info(f"train dataset: {entire_data['name']} appended")
 
     if "validation" in entire_data:
         data = entire_data["validation"]
@@ -35,3 +37,8 @@ for entire_data in data_list:
         label_key=entire_data["label_key"],
     )
     valid_datasets.append(dataset)
+    logging.info(f"valid dataset: {entire_data['name']} appended")
+
+pl_model = LanguageMultiTaskEncoderDecoder(train_datasets, valid_datasets)
+
+logging.info(pl_model)

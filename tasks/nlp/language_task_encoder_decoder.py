@@ -1,3 +1,4 @@
+from torch.utils.data import Dataset, DataLoader
 from transformers import PerceiverConfig, PerceiverTokenizer, PerceiverForMaskedLM
 from pytorch_lightning.trainer.supporters import CombinedLoader
 
@@ -8,28 +9,40 @@ import pytorch_lightning as pl
 class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
     def __init__(
         self,
-        task_configs: [dict],
-        decoder_dim: int,
+        train_datasets: [Dataset],
+        valid_datasets: [Dataset],
         config: str = "deepmind/language-perceiver",
         baseModelPath: str = None,
         lr: float = 1e-3,
         batch_size: int = 16,
     ):
         super().__init__()
+
+        self.train_datasets = train_datasets
+        self.valid_datasets = valid_datasets
+
         if baseModelPath is None:
             self.base_model = PerceiverForMaskedLM.from_pretrained(config)
         else:
             self.base_model = PerceiverForMaskedLM.from_pretrained(baseModelPath)
 
-        self.task_configs = task_configs
         self.tokenzier = PerceiverTokenizer.from_pretrained(config)
         self.config = PerceiverConfig.from_pretrained(config)
         self.lr = lr
         self.batch_size = batch_size
 
-        # add multiple classifier layers
-        for task_config in self.task_configs:
-            pass
+        # add multiple predictions layers
+        self.feature_layers = nn.ModuleDict(
+            {
+                f"{each_dataset.task_type}-{each_dataset.task_name}": nn.Linear(
+                    self.config.d_model,
+                    len(each_dataset.label_set)
+                    if hasattr(each_dataset, "label_set")
+                    else 1,
+                )
+                for each_dataset in self.train_datasets
+            }
+        )
 
     def forward(self, text):
         # prepare input
@@ -49,13 +62,15 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
         pass
 
     def train_dataloader(self):
-        pass
+        train_loaders = {}
+        return train_loaders
 
     def training_step(self, train_batch, batch_idx):
         pass
 
     def val_dataloader(self):
-        pass
+        valid_loaders = {}
+        return valid_loaders
 
     def validation_step(self, val_batch, batch_idx):
         pass

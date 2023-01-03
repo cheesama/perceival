@@ -2,6 +2,7 @@ from torch.utils.data import Dataset
 from datasets import arrow_dataset
 
 import itertools
+import logging
 
 
 class LanguageMultiTaskDataset(Dataset):
@@ -40,5 +41,8 @@ class LanguageMultiTaskDataset(Dataset):
 
     def __getitem__(self, idx):
         item = self.data[idx]
-
-        return [item[feature] for feature in self.feature_keys] + item[self.label_key]
+        return (
+            self.task_type,
+            self.task_name,
+            [item[feature] for feature in self.feature_keys] + [item[self.label_key]],
+        )

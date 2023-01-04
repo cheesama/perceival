@@ -1,4 +1,5 @@
 from torch.utils.data import Dataset, DataLoader
+from torch import optim
 from transformers import PerceiverConfig, PerceiverTokenizer, PerceiverForMaskedLM
 from pytorch_lightning.trainer.supporters import CombinedLoader
 
@@ -13,7 +14,7 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
         valid_datasets: [Dataset],
         config: str = "deepmind/language-perceiver",
         baseModelPath: str = None,
-        lr: float = 1e-3,
+        lr: float = 1e-5,
         batch_size: int = 16,
     ):
         super().__init__()
@@ -58,19 +59,32 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
         pass
 
     def configure_optimizers(self):
-        # return multiple optimizers
-        pass
+        optimizer = optim.Adam(self.parameters(), lr=self.lr)
+        return optimizer
 
     def train_dataloader(self):
-        train_loaders = {}
-        return train_loaders
+        train_loaders = {
+            f"{dataset.task_type}-{dataset.task_name}": DataLoader(
+                dataset, batch_size=self.batch_size
+            )
+            for dataset in self.train_datasets
+        }
+        combined_loader = CombinedLoader(train_loaders, mode="max_size_cycle")
+        return combined_loader
 
     def training_step(self, train_batch, batch_idx):
-        pass
+        print (train_batch)
+
 
     def val_dataloader(self):
-        valid_loaders = {}
-        return valid_loaders
+        valid_loaders = {
+            f"{dataset.task_type}-{dataset.task_name}": DataLoader(
+                dataset, batch_size=self.batch_size
+            )
+            for dataset in self.valid_datasets
+        }
+        combined_loader = CombinedLoader(valid_loaders, mode="max_size_cycle")
+        return combined_loader
 
     def validation_step(self, val_batch, batch_idx):
-        pass
+        print (val_batch)

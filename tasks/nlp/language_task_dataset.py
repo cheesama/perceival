@@ -4,7 +4,7 @@ from transformers import PerceiverTokenizer
 
 import itertools
 import logging
-
+import torch
 
 class LanguageMultiTaskDataset(Dataset):
     def __init__(
@@ -43,13 +43,15 @@ class LanguageMultiTaskDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        print (self.task_name)
+        print(self.task_name)
         item = self.data[idx]
         features = self.tokenizer(
-            self.tokenizer.sep_token.join(item[feature] for feature in self.feature_keys),
+            self.tokenizer.sep_token.join(
+                item[feature] for feature in self.feature_keys
+            ),
             padding="max_length",
             return_tensors="pt",
         )
         label = item[self.label_key]
 
-        return features, label
+        return features, torch.tensor([label])

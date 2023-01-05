@@ -12,7 +12,6 @@ train_datasets = []
 valid_datasets = []
 
 for entire_data in data_list:
-    logging.warn(entire_data["name"])
     data = entire_data["train"]
     dataset = LanguageMultiTaskDataset(
         task_type=entire_data["task_type"],
@@ -22,7 +21,6 @@ for entire_data in data_list:
         label_key=entire_data["label_key"],
     )
     train_datasets.append(dataset)
-    logging.info(f"train dataset: {entire_data['name']} appended")
 
     if "validation" in entire_data:
         data = entire_data["validation"]
@@ -38,7 +36,6 @@ for entire_data in data_list:
         label_key=entire_data["label_key"],
     )
     valid_datasets.append(dataset)
-    logging.info(f"valid dataset: {entire_data['name']} appended")
 
 pl_model = LanguageMultiTaskEncoderDecoder(train_datasets, valid_datasets)
 

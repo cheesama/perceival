@@ -3,31 +3,19 @@
 # SequenceClassification, TokenClassification, Regression
 
 # sources: huggingface_datasets, korpora
-
-
-[[tasks]]
-name = "klue"
-sub_tasks = ["ynat", "nli", "ner"]
-task_types = [
-    "SequenceClassification",
-    "SequenceClassification",
-    "TokenClassification",
-]
-feature_keys = [["title"],["premise","hypothesis"],["sentence"]]
-label_keys = ["label", "label", "ner_tags"]
-
-[[tasks]]
-name = "kor_sarcasm"
-task_types = ["SequenceClassification"]
-feature_keys = [["tokens"]]
-label_keys = ["label"]
-
 [[tasks]]
 name = "kor_nlu"
 sub_tasks = ["nli", "sts"]
 task_types = ["SequenceClassification", "Regression"]
 feature_keys = [["premise","hypothesis"],["sentence1","sentence2"]]
 label_keys = ["label","score"]
+
+
+[[tasks]]
+name = "kor_sarcasm"
+task_types = ["SequenceClassification"]
+feature_keys = [["tokens"]]
+label_keys = ["label"]
 
 [[tasks]]
 name = "skt/kobest_v1"
@@ -76,3 +64,14 @@ name = "korean_petitions"
 task_types = ["SequenceClassification"]
 feature_keys = [["text","title"]]
 label_keys = ["category"]
+
+[[tasks]]
+name = "klue"
+sub_tasks = ["ynat", "nli"]
+task_types = [
+    "SequenceClassification",
+    "SequenceClassification",
+]
+feature_keys = [["title"],["premise","hypothesis"]]
+label_keys = ["label", "label"]
+

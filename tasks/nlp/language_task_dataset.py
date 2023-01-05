@@ -1,5 +1,6 @@
 from torch.utils.data import Dataset
 from datasets import arrow_dataset
+from transformers import PerceiverTokenizer
 
 import itertools
 import logging
@@ -12,7 +13,8 @@ class LanguageMultiTaskDataset(Dataset):
         task_name: str,
         data: arrow_dataset.Dataset,
         feature_keys: list,
-        label_key: str,
+        label_key,
+        config: str = "deepmind/language-perceiver",
     ):
         assert task_type in [
             "SequenceClassification",
@@ -21,14 +23,15 @@ class LanguageMultiTaskDataset(Dataset):
             "NextSentencePrediction",
             "CausalLM",
             "Seq2SeqLM",
+            "QuestionAnswering",
         ]
-        pass
 
         self.task_type = task_type
         self.task_name = task_name
         self.data = data
         self.feature_keys = feature_keys
         self.label_key = label_key
+        self.tokenizer = PerceiverTokenizer.from_pretrained(config)
 
         if self.task_type != "Regression":
             if type(self.data[label_key][0]) == list:
@@ -40,9 +43,13 @@ class LanguageMultiTaskDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
+        print (self.task_name)
         item = self.data[idx]
-        return (
-            self.task_type,
-            self.task_name,
-            [item[feature] for feature in self.feature_keys] + [item[self.label_key]],
+        features = self.tokenizer(
+            self.tokenizer.sep_token.join(item[feature] for feature in self.feature_keys),
+            padding="max_length",
+            return_tensors="pt",
         )
+        label = item[self.label_key]
+
+        return features, label

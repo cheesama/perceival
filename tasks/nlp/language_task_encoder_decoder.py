@@ -73,8 +73,7 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
         return combined_loader
 
     def training_step(self, train_batch, batch_idx):
-        print (train_batch)
-
+        print(train_batch)
 
     def val_dataloader(self):
         valid_loaders = {
@@ -84,7 +83,8 @@ class LanguageMultiTaskEncoderDecoder(pl.LightningModule):
             for dataset in self.valid_datasets
         }
         combined_loader = CombinedLoader(valid_loaders, mode="max_size_cycle")
+        print (combined_loader)
         return combined_loader
 
     def validation_step(self, val_batch, batch_idx):
-        print (val_batch)
+        print(val_batch)
